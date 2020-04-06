@@ -1,15 +1,42 @@
 <template>
   <div class="login_container">
     <div class="login_box">
+      <!-- 头像区域 -->
       <div class="avator_box">
         <img src="../assets/logo.png" alt />
       </div>
+      <!-- 登录表单区域 -->
+      <el-form :model="loginForm" class="login_form">
+        <!--用户名 -->
+        <el-form-item>
+          <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"></el-input>
+        </el-form-item>
+        <!-- 密码 -->
+        <el-form-item>
+          <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"></el-input>
+        </el-form-item>
+        <!-- 按钮区域 -->
+        <el-form-item class="btns">
+          <el-button type="primary">登录</el-button>
+          <el-button type="info">重置</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      // 这是登陆表单的绑定对象
+      loginForm: {
+        username: 'zs',
+        password: '123'
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -36,7 +63,7 @@ export default {}
     box-shadow: 0 0 10px #dddddd;
     position: absolute;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     background-color: #ffffff;
     img {
       width: 100%;
@@ -44,6 +71,17 @@ export default {}
       border-radius: 50%;
       background-color: #eeeeee;
     }
+  }
+  .btns {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .login_form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 }
 </style>
