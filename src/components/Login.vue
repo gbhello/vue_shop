@@ -31,8 +31,8 @@ export default {
     return {
       // 这是登陆表单的绑定对象
       loginForm: {
-        username: 'zs',
-        password: '123'
+        username: 'admin',
+        password: '123456'
       },
       // 这是表单的验证规则对象
       loginFormRules: {
@@ -63,6 +63,8 @@ export default {
           return this.$message.error('登录失败！')
         }
         this.$message.success('登录成功！')
+        window.sessionStorage.setItem('token', res.data.token)
+        this.$router.push('/home')
       })
     }
   }
