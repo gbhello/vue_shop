@@ -12,21 +12,46 @@
       <!-- 添加角色按钮 -->
       <el-button type="primary">添加角色</el-button>
       <el-table :data="roleList" border style="width:100%">
-        <!-- 树形展示权限信息 -->
+        <!-- 展示角色对应的权限数据 -->
         <el-table-column type="expand">
           <template slot-scope="scope">
             <el-row
-              :class="['bdbottom',i1===0?'bdtop':'']"
+              :class="['bdbottom',i1===0?'bdtop':'','vcenter']"
               v-for="(item1,i1) in scope.row.children"
               :key="item1.id"
             >
               <!-- 渲染一级权限 -->
               <el-col :span="5">
-                <el-tag>{{item1.authName}}</el-tag>
+                <el-tag closable
+                      @close="deleteRightById(scope.row,item1.id)">{{item1.authName}}</el-tag>
                 <i class="el-icon-caret-right"></i>
               </el-col>
-              <!-- 渲染二级权限 -->
-              <el-col :span="19"></el-col>
+              <!-- 渲染二级和三级权限 -->
+              <el-col :span="19">
+                <!-- 渲染二级权限 -->
+                <el-row
+                  :class="[i2===0?'':'bdtop','vcenter']"
+                  v-for="(item2,i2) in item1.children"
+                  :key="item2.id"
+                >
+                  <!-- 渲染二级权限 -->
+                  <el-col :span="6">
+                    <el-tag type="success" closable
+                      @close="deleteRightById(scope.row,item2.id)">{{item2.authName}}</el-tag>
+                    <i class="el-icon-caret-right"></i>
+                  </el-col>
+                  <!-- 渲染三级权限 -->
+                  <el-col :span="18">
+                    <el-tag
+                      v-for="item3 in item2.children"
+                      :key="item3.id"
+                      type="danger"
+                      closable
+                      @close="deleteRightById(scope.row,item3.id)"
+                    >{{item3.authName}}</el-tag>
+                  </el-col>
+                </el-row>
+              </el-col>
             </el-row>
           </template>
         </el-table-column>
@@ -77,6 +102,29 @@ export default {
         this.firstLevelAuthIdList.push(childrenList)
       }
       console.log(this.firstAuthIdList)
+    },
+    // 删除角色指定权限
+    async deleteRightById(role, rightId) {
+      // 弹框提示用户是否要删除
+      var confirmResult = await this.$confirm(
+        '此操作将永久删除该权限，是否继续？',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch(err => err)
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('删除已取消！')
+      }
+      const { data: res } = await this.$http.delete(
+        `roles/${role.id}/rights/${rightId}`
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error('删除权限失败！')
+      }
+      role.children = res.data
     }
   }
 }
@@ -92,5 +140,10 @@ export default {
 
 .bdbottom {
   border-bottom: 1px solid #eeeeee;
+}
+
+.vcenter {
+  display: flex;
+  align-items: center;
 }
 </style>
