@@ -96,7 +96,7 @@
         <el-button @click="setRightDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="allotRight()">确 定</el-button>
       </span>
-    </el-dialog>)
+    </el-dialog>
   </div>
 </template>
 
