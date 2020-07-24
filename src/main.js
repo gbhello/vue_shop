@@ -22,7 +22,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 // 配置请求的根路径
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://121.42.13.121:8888/api/private/v1/'
 
 // 配置请求头,同时在request拦截器中，展示进度条NProgress进度条
 axios.interceptors.request.use(config => {
