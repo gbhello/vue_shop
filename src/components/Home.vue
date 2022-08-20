@@ -47,11 +47,28 @@
 
 <script>
 export default {
+    data(){
+        return{
+            // 左侧菜单数据
+            menulist:[]
+        }
+    },
+    created(){
+        this.getMenuList()
+    },
   methods: {
     logout() {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
+    // 获取所有菜单
+    async getMenuList(){
+        // 因为get返回的参数类型是promise类型，所以可使用async await 简化操作
+        const {data: res}=await this.$http.get('menus')
+        if(res.meta.status!==200) return this.$message.error(res.meta.msg)
+        this.menulist=res.data
+        console.log(res);
+    }
   },
 }
 </script>
