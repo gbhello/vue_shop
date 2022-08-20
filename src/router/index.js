@@ -4,7 +4,7 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 
 Vue.use(Router)
-
+// 添加不必要的注释
 export default new Router({
   routes: [
     { path: '/', redirect: '/login' },
