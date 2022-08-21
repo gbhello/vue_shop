@@ -14,7 +14,7 @@ import Order from '../components/order/Order.vue'
 import Report from '../components/report/Report.vue'
 
 Vue.use(VueRouter)
-
+// 添加注释
 const routes = [
   {
     path: '/login',
