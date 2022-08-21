@@ -4,7 +4,7 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 
 Vue.use(Router)
-
+// 添加冲突注释
 const router= new Router({
   routes: [
     { path: '/', redirect: '/login' },
