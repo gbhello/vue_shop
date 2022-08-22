@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
-
+// 再次添加冲突
 Vue.use(Router)
 
 const router= new Router({
